@@ -29,7 +29,9 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/varify', [AuthController::class, 'varify'])->name('varify');
+//Route::post()
 // Role-based dashboards
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard/student', [AuthController::class, 'studentDashboard'])->middleware('role:student');

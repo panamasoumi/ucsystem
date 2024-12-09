@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
     <h1>Login Page</h1>
@@ -15,6 +17,7 @@
         <br>
         <button type="submit">Login</button>
     </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 

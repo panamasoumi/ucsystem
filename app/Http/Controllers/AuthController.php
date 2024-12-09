@@ -56,4 +56,27 @@ class AuthController extends Controller
     {
         return view('dashboard.employee');
     }
+    public function Register(Request $request)
+    {
+        return view('auth.register');
+    }
+    public function Varify(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+            'role' => 'required|in:employee,teacher,student'
+        ]);
+        $user = User::create([
+            'email' => $request->email,
+            'name'  =>'test',
+            'password' => Hash::make($request->password),
+            'role' => $request->role
+        ]);
+
+        Auth::login($user);
+        return redirect()->intended('/dashboard/' . Auth::user()->role);
+    }
+
 }
+
