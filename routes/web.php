@@ -40,4 +40,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index']);
-
+Route::group(['middleware' => 'role:Admin'], function() {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+});

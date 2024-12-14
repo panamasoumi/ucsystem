@@ -55,4 +55,15 @@ public function courses(){
 
 } 
 
+public function role()
+{
+    return $this->belongsTo(Role::class);
+}
+
+public function courses()
+{
+    return $this->belongsToMany(Course::class, 'course_selections', 'student_id', 'course_id');
+}
+
+
 }
