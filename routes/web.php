@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +42,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index']);
-Route::group(['middleware' => 'role:Admin'], function() {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-});
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::get('/student/select-course', [StudentController::class, 'selectCourse'])->name('student.selectCourse');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/courses', [CourseController::class, 'index']);

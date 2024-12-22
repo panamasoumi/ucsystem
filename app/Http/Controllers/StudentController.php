@@ -6,5 +6,8 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
-    //
+    public function selectCourse()
+    {
+        return view('student.select-course'); // صفحه انتخاب واحد
+    }
 }
