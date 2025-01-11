@@ -10,6 +10,6 @@ class Course extends Model
     use HasFactory;
 
 public function enrollments(){
-    return $this->hasMany(enrollments::class,'course_id');
+    return $this->hasMany(Enrollment::class,'course_id');
 }
 }

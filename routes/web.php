@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
@@ -42,7 +44,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index']);
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::get('/employee', [EmployeeController::class, 'index'])->name('emlpoyee.dashboard');
 Route::get('/student/select-course', [StudentController::class, 'selectCourse'])->name('student.selectCourse');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/courses', [CourseController::class, 'index']);
+

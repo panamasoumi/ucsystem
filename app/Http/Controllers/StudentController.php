@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
     public function selectCourse()
     {
-        return view('student.select-course'); // صفحه انتخاب واحد
+        $courses = Course::all(); 
+        dd($courses);
+        return view('student', compact('courses'));
     }
 }

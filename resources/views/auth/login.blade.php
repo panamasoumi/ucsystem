@@ -67,6 +67,7 @@
             <br>
             <button type="submit">Login</button>
         </form>
+        <p>Don't have an account? <a href="{{ route('register') }}">Register now</a></p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
