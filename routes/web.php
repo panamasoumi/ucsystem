@@ -40,6 +40,8 @@ Route::post('/varify', [AuthController::class, 'varify'])->name('varify');
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard/student', [AuthController::class, 'studentDashboard'])->middleware('role:student');
     Route::get('/dashboard/teacher', [AuthController::class, 'teacherDashboard'])->middleware('role:teacher');
+    Route::get('/dashboard/employee', [AuthController::class, 'employeedashboard'])->name('role:employee');
+
 
 });
 

@@ -12,9 +12,15 @@ class DashboardController extends Controller
             return view('dashboard.student');
         } elseif (auth()->user()->hasRole('teacher')) {
             return view('dashboard.teacher');
-        } elseif (auth()->user()->hasRole('staff')) {
-            return view('dashboard.staff');
+        } elseif (auth()->user()->hasRole('employee')) {
+            
+            $students = Students::all();
+            $teachers = Teacher::all();
+            $courses = Course::all();
+
+            return view('dashboard.employee', compact('students', 'teachers', 'courses'));
         }
+        
     }
 }
 

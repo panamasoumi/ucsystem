@@ -20,12 +20,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($students as $student)
+                @forelse ($students as $student)
                     <tr>
                         <td>{{ $student->name }}</td>
                         <td>{{ $student->email }}</td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="2">No students found.</td>
+                    </tr>
+                @endforelse    
             </tbody>
         </table>
 
