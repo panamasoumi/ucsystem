@@ -9,13 +9,26 @@ class Course extends Model
 {
     use HasFactory;
 
-public function enrollments(){
-    return $this->hasMany(Enrollment::class,'course_id');
-}
+    protected $fillable = ['course_name', 'course_code', 'semester'];
 
-public function teachers()
+    public function enrollments()
     {
-        return $this->belongsToMany(Teacher::class)->withPivot('credits');
+        return $this->hasMany(Enrollment::class,'course_id');
+    }
+        
+
+    public function teachers()
+    {
+        return $this->belongsToMany(User::class,'course_teacher','course_id','teacher_id')
+        ->where('role', 'teacher')
+        ->withPivot('semester');
+    }
+
+    public function students(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class,'course_student','course_id','student_id')
+            ->where('role', 'student')
+            ->withPivot('semester');
     }
     
 }

@@ -51,3 +51,17 @@ Route::get('/student/select-course', [StudentController::class, 'selectCourse'])
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/courses', [CourseController::class, 'index']);
 
+Route::group(['prefix' => 'teachers', 'middleware' => ['auth','isActiveTeacher']], function () {
+    Route::post('/enroll', function () {
+        dd(request()->all());
+    })->name('teacher.selectCourses');
+
+    Route::get('/courses', [TeacherCourseController::class, 'index']);
+    Route::get('/courses/{course}', [TeacherCourseController::class, 'show']);
+});
+
+Route::group(['prefix' => 'students', 'middleware' => ['auth','isActiveStudent']], function () {
+    Route::post('/enroll', function () {
+        dd(request()->all());
+    })->name('student.selectCourses');
+});

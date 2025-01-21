@@ -44,12 +44,14 @@ class AuthController extends Controller
     // Dashboards for each role
     public function studentDashboard()
     {
-        return view('dashboard.student');
+        $courses = auth()->user()->studentCourses;
+        return view('dashboard.student',compact('courses'));
     }
 
     public function teacherDashboard()
     {
-        return view('dashboard.teacher');
+        $courses = auth()->user()->teacherCourses;
+        return view('dashboard.teacher',compact('courses'));
     }
 
     public function employeeDashboard()

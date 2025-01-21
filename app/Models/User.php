@@ -45,14 +45,20 @@ class User extends Authenticatable
     ];
 
     
-public function enrollments() {
-    return $this->hasMany(Enrollment::class,'student_id');
-}
+    public function enrollments() 
+    {
+        return $this->hasMany(Enrollment::class,'student_id');
+    }    
 
+    public function courses()
+    {
+        return $this->hasMany(Course::class,'Teacher_id');
+    } 
 
-public function courses(){
-    return $this->hasMany(Course::class,'Teacher_id');
-
-} 
+    public function studentCourses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class,'course_student','student_id','course_id')
+        ->withPivot('semester');
+    }
 
 }
