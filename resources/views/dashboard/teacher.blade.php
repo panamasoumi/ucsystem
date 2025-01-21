@@ -10,11 +10,11 @@
     <p>Here, you can manage your courses and assignments.</p>
     @foreach($courses as $course)
     <label>
-        <input type="checkbox" name="courses[]" value="{{ $course->id }}" 
+        <input type="checkbox" name="courses[]" value="{{ $course->id }}"
                @if(in_array($course->id, old('courses', $teacher->courses->pluck('id')->toArray()))) checked @endif>
         {{ $course->name }} ({{ $course->credits }} credits)
     </label><br>
-@endforeach
+    @endforeach
 <form action="{{ route('teacher.selectCourses') }}" method="POST">
     @csrf
     <div>

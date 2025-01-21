@@ -10,16 +10,12 @@
     <p>Here, you can view and select your courses.</p>
     <form method="POST" action="{{ route('student.selectCourse') }}">
         @csrf
-        @if(isset($courses) && $courses->count() > 0)
-            @foreach ($courses as $course)
-            <div>
-                <input type="checkbox" name="courses[]" value="{{ $course->id }}">
-                {{ $course->name }} ({{ $course->units }} units)
-            </div>
-            @endforeach
-        @else
-            <p>No courses available at the moment.</p>
-        @endif
+        @foreach ($courses as $course)
+        <div>
+            <input type="checkbox" name="courses[]" value="{{ $course->id }}">
+            {{ $course->name }} ({{ $course->units }} units)
+        </div>
+        @endforeach
         <button type="submit">Select Courses</button>
     </form>
 </body>
