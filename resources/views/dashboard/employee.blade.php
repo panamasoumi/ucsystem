@@ -1,76 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Admin Dashboard</h1>
+@extends('layouts.app')
+
+@section('content')
+    <h1>Employee Dashboard</h1>
+
+    <section>
+        <h2>Courses for New Semester</h2>
+        @if(empty($courses) || $courses->isEmpty())
+            <p>No courses available for the new semester.</p>
+        @else
+            <ul>
+                @foreach($courses as $course)
+                    <li>{{ $course->name }} (Code: {{ $course->code }})</li>
+                @endforeach
+            </ul>
+        @endif
+    
         <hr>
+    
+        <h3>Add New Course</h3>
+        <form action="{{ route('courses.store') }}" method="POST">
+            @csrf
+            <label for="name">Course Name:</label>
+            <input type="text" name="course_name" id="course_name" required>
+    
+            <label for="code">Course Code:</label>
+            <input type="text" name="course_code" id="course_code" required>
 
-        <h2>Students</h2>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($students as $student)
-                    <tr>
-                        <td>{{ $student->name }}</td>
-                        <td>{{ $student->email }}</td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="2">No students found.</td>
-                    </tr>
-                @endforelse    
-            </tbody>
-        </table>
+            <label for="credit">Credit:</label>
+            <input type="number" name="credit" id="credit" required>
+    
+            <button type="submit">Add Course</button>
+        </form>
+    </section>
+    
 
-        <h2>Teachers</h2>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($teachers as $teacher)
-                    <tr>
-                        <td>{{ $teacher->name }}</td>
-                        <td>{{ $teacher->email }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+    <hr>
 
-        <h2>Courses</h2>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Code</th>
-                    <th>Units</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($courses as $course)
+    <section>
+        <h2>Users (Students and Teachers)</h2>
+        @if(isset($users) && $users->isNotEmpty())
+            <table border="1" cellpadding="10">
+                <thead>
                     <tr>
-                        <td>{{ $course->name }}</td>
-                        <td>{{ $course->code }}</td>
-                        <td>{{ $course->units }}</td>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+                </thead>
+                <tbody>
+                    @foreach($users as $user)
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ ucfirst($user->role) }}</td>
+                            <td>{{ ucfirst($user->status) }}</td>
+                            <td>
+                                @if($user->status === 'pending')
+                                    <form action="{{ route('employee.approveUser', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button type="submit">Approve</button>
+                                    </form>
+                                    <form action="{{ route('employee.rejectUser', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button type="submit">Reject</button>
+                                    </form>
+                                @else
+                                    <span>-</span>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <p>No users found.</p>
+        @endif
+    </section>
+@endsection
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherCourseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
@@ -23,12 +24,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-
 // Login route
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -46,7 +41,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->get('/dashboard', [DashboardController::class, 'index']);
-Route::get('/employee', [EmployeeController::class, 'index'])->name('emlpoyee.dashboard');
+//Route::get('/employee', [EmployeeController::class, 'index'])->name('emlpoyee.dashboard');
 Route::get('/student/select-course', [StudentController::class, 'selectCourse'])->name('student.selectCourse');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/courses', [CourseController::class, 'index']);
@@ -64,4 +59,13 @@ Route::group(['prefix' => 'students', 'middleware' => ['auth','isActiveStudent']
     Route::post('/enroll', function () {
         dd(request()->all());
     })->name('student.selectCourses');
+});
+
+Route::middleware(['auth', 'role:employee'])->group(function () {
+    Route::get('/employee/dashboard', [EmployeeController::class, 'dashboard'])->name('employee.dashboard');
+    Route::get('/employee/courses', [EmployeeController::class, 'listCourses'])->name('employee.courses');
+    Route::post('/courses/store', [CourseController::class, 'store'])->name('courses.store');
+    Route::get('/employee/users', [EmployeeController::class, 'listUsers'])->name('employee.users');
+    Route::post('/employee/users/{id}/approve', [EmployeeController::class, 'approveUser'])->middleware('csrf');
+    Route::post('/employee/users/{id}/reject', [EmployeeController::class, 'rejectUser'])->name('employee.rejectUser');
 });
