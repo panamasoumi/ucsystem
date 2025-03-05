@@ -63,9 +63,12 @@ Route::group(['prefix' => 'students', 'middleware' => ['auth','isActiveStudent']
 
 Route::middleware(['auth', 'role:employee'])->group(function () {
     Route::get('/employee/dashboard', [EmployeeController::class, 'dashboard'])->name('employee.dashboard');
-    Route::get('/employee/courses', [EmployeeController::class, 'listCourses'])->name('employee.courses');
+    Route::get('/dashboard/employee', [DashboardController::class, 'index'])->name('dashboard.employee');
+    Route::get('/employee/courses', [EmployeeController::class, 'index'])->name('employee.courses');
     Route::post('/courses/store', [CourseController::class, 'store'])->name('courses.store');
     Route::get('/employee/users', [EmployeeController::class, 'listUsers'])->name('employee.users');
-    Route::post('/employee/users/{id}/approve', [EmployeeController::class, 'approveUser'])->middleware('csrf');
-    Route::post('/employee/users/{id}/reject', [EmployeeController::class, 'rejectUser'])->name('employee.rejectUser');
+    //Route::post('/employee/users/{id}/approve', [EmployeeController::class, 'approveUser'])->middleware('csrf');
+    //Route::post('/employee/users/{id}/reject', [EmployeeController::class, 'rejectUser'])->name('employee.rejectUser');
 });
+
+//Route::get('/courses/list', [CourseController::class, 'list'])->name('courses.list');

@@ -80,5 +80,7 @@ class AuthController extends Controller
         return redirect()->intended('/dashboard/' . Auth::user()->role);
     }
 
+    
+
 }
 

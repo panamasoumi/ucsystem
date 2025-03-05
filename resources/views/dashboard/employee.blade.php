@@ -5,6 +5,11 @@
 
     <section>
         <h2>Courses for New Semester</h2>
+        @if(session('success'))
+        <div style="color: green;">{{ session('success') }}</div>
+        @endif
+
+
         @if(empty($courses) || $courses->isEmpty())
             <p>No courses available for the new semester.</p>
         @else
@@ -28,9 +33,15 @@
 
             <label for="credit">Credit:</label>
             <input type="number" name="credit" id="credit" required>
+
+            <label for="semester">Semester:</label>
+            <input type="text" name="semester" id="semester" required>
+        
     
             <button type="submit">Add Course</button>
         </form>
+
+        
     </section>
     
 
